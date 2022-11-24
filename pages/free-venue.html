@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>User | Available Venue</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- customize css -->
+    <link rel="stylesheet" href="../css/mobiscroll.javascript.min.css">
+    <script src="../js/mobiscroll.javascript.min.js"></script>
+    <link rel="stylesheet" href="../dist/css/style.css">
+    
+    <link rel="stylesheet" href="../calender.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+
+    <style>
+        .directorList input[type="radio"][id^="cb"] {
+            display: none;
+        }
+        .directorList label {
+            border: 1px solid #182C61;
+            padding: 40px 0;
+            display: block;
+            position: relative;
+            margin: 0 10px;
+            cursor: pointer;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            color: #182C61;
+            border-radius: 4px;
+        }
+        .directorList label::before {
+            background-color: blue;
+            color: white;
+            display: block;
+            border-radius: 50%;
+            border: 1px solid #182C61;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 17px;
+            height: 25px;
+            text-align: center;
+            line-height: 28px;
+            transition-duration: 0.4s;
+            transform: scale(0);
+        }
+        .directorList label img {
+            height: 100px;
+            width: 100px;
+            transition-duration: 0.2s;
+            transform-origin: 50% 50%;
+        }
+        .directorList :checked+label {
+            border-color: #663399;
+            background-color: rgba(72, 61, 139, 0.65);
+            color: #fff;
+        }
+        .directorList :checked+label::before {
+            background-color: #182C61;
+            transform: scale(1);
+        }
+        .directorList :checked+label img {
+            transform: scale(0.9);
+            box-shadow: 0 0 5px #333;
+            z-index: -1;
+            background-color: blue;
+        }  
+        .directorList .CheckStyle{
+            margin: auto;
+            width: 50%;
+        }
+        .directorList .CheckStyle .lead{
+            border: 2px solid #182C61;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .directorList .btnStyle2{
+            padding: 10px 30px;
+            margin-left: 10px;
+        }
+        
+        /* Check button section start */
+        .button {
+            display: inline-block;
+            border-radius: 8px;
+            background-color: #182C61;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 22px;
+            padding: 10px;
+            width: 150px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+        .button:hover span {
+            padding-right: 25px;
+        }
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+        /* Check button section end */ 
+        
+        .item span{
+            display: inline-block;
+            border-radius: 4px;
+            border: 1px solid #182C61;
+            color: #000;
+            text-align: center;
+            font-size: 15px;
+            padding: 15px 4px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .radios .radio{
+            background-color: transparent;
+            display:inline-block;
+            border-radius: 7px;
+            color: #000
+        }
+        .radios input[type=radio]{
+            display:none
+        }
+        .radios .radio:hover{
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
+        }
+        .radios input[type=radio]:checked + .radio span{
+            background-color: #182C61;
+            color: #fff;
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
+        }
+        .fit-image {
+            width: 100%;
+            object-fit: cover
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item companyLogo">
+                <!-- Brand Logo -->
+                <a href="../index.html" class="brand-link">
+                    <img src="../dist/img/logo.png" alt="Logo" class="" >
+                </a>
+            </li>
+            <li class="nav-item sidebarShow">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <!-- SEARCH FORM -->
+        <form class="form-inline ml-3 indexForm">
+            <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link"  href="#">
+                    <i class="fas fa-headset"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="../pages/setting.html">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <img src="../dist/img/photo.jpg" class="dropDownImage img-circle shadow" alt="User Image">
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <a href="../pages/profile.html" class="dropdown-item">
+                        <div class="media">
+                            <img src="../dist/img/photo.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title pt-3">Mohammad Shahabuddin</h3>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="../pages/change-password.html" class="dropdown-item">
+                        <div class="media">
+                            <img src="../dist/img/password-icon.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title pt-3">Change Password</h3>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="media">
+                            <img src="../dist/img/logout-icon.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title pt-3">Log Out</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="wrapper">
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="../dist/img/photo.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="../pages/profile.html" class="d-block">Mohammad Shahabuddin</a>
+                    </div>
+                </div>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="../index.html" class="nav-link">
+                                <i class="fas fa-home"></i>
+                                <p>WiztecBD</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../pages/appointment.html" class="nav-link">
+                                <i class="far fa-calendar-check"></i>
+                                <p>Set Appointment</p>
+                            </a>
+                        </li>                    
+                        <li class="nav-item">
+                            <a href="../pages/director.html" class="nav-link">
+                                <i class="far fa-calendar-plus"></i>
+                                <p>Check Common Free Time</p>
+                            </a>
+                        </li>                        
+                        <li class="nav-item">
+                            <a href="../pages/group-request.html" class="nav-link">
+                                <i class="fas fa-user-plus"></i>
+                                <p>Send Group Request</p>
+                            </a>
+                        </li>                        
+                                               
+                        <li class="nav-item">
+                            <a href="../pages/director.html" class="nav-link active">
+                                <i class="fas fa-user-tie"></i>
+                                <p>Directors</p>
+                            </a>
+                        </li>                      
+                        <li class="nav-item">
+                            <a href="../pages/users.html" class="nav-link">
+                                <i class="fas fa-users"></i>
+                                <p>User List</p>
+                            </a>
+                        </li>                       
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-envelope"></i>
+                                <p>Request List<i class="fas fa-angle-left right"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../pages/pending.html" class="nav-link">
+                                        <i class="fas fa-history"></i>
+                                        <p>Pending</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../pages/sent.html" class="nav-link">
+                                        <i class="far fa-paper-plane"></i>
+                                        <p>Sent</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../pages/receive.html" class="nav-link">
+                                        <i class="far fa-paper-plane"></i>
+                                        <p>Received</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../pages/all.html" class="nav-link">
+                                        <i class="fas fa-inbox"></i>
+                                        <p>All</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>                       
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-laptop-house"></i>
+                                <p>Venue List<i class="fas fa-angle-left right"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="../pages/venues.html" class="nav-link">
+                                        <i class="fas fa-store-slash"></i>
+                                        <p>Venues</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../pages/request-venue.html" class="nav-link">
+                                        <i class="fas fa-list"></i>
+                                        <p>Request List</p>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>  
+                        <li class="nav-item">
+                            <a href="../pages/profile.html" class="nav-link">
+                                <i class="fas fa-user-tie"></i>
+                                <p>Profile</p>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </nav>
+                <!-- sidebar-menu -->
+            </div>
+            <!-- sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Venues</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">                    
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="shadow">
+                                    <div id="datepicker"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 pt-2">
+                                <div class="shadow">
+                                    <input type="text" id="my-input" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="directorList">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 pb-3">
+                                    <input type="radio" id="cb1" name="venue"/>
+                                    <label for="cb1" class="shadow rounded">
+                                        <div class="card-body pt-0">
+                                            <div class="text-center">
+                                                <img src="../dist/img/GetImage.jpg" alt="" class="rounded img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="lead">
+                                                <b>Venue name</b>
+                                            </h2>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 pb-3">
+                                    <input type="radio" id="cb2" name="venue"/>
+                                    <label for="cb2" class="shadow rounded">
+                                        <div class="card-body pt-0">
+                                            <div class="text-center">
+                                                <img src="../dist/img/GetImage.jpg" alt="" class="rounded img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="lead">
+                                                <b>Venue name</b>
+                                            </h2>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 pb-3">
+                                    <input type="radio" id="cb3" name="venue"/>
+                                    <label for="cb3" class="shadow rounded">
+                                        <div class="card-body pt-0">
+                                            <div class="text-center">
+                                                <img src="../dist/img/GetImage.jpg" alt="" class="rounded img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="lead">
+                                                <b>Venue name</b>
+                                            </h2>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 pb-3">
+                                    <input type="radio" id="cb4" name="venue"/>
+                                    <label for="cb4" class="shadow rounded">
+                                        <div class="card-body pt-0">
+                                            <div class="text-center">
+                                                <img src="../dist/img/GetImage.jpg" alt="" class="rounded img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="lead">
+                                                <b>Venue name</b>
+                                            </h2>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 pb-3">
+                                    <input type="radio" id="cb5" name="venue" />
+                                    <label for="cb5" class="shadow rounded">
+                                        <div class="card-body pt-0">
+                                            <div class="text-center">
+                                                <img src="../dist/img/GetImage.jpg" alt="" class="rounded img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="lead">
+                                                <b>Venue name</b>
+                                            </h2>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-md-4 pb-3">
+                                    <input type="radio" id="cb6" name="venue" />
+                                    <label for="cb6" class="shadow rounded">
+                                        <div class="card-body pt-0">
+                                            <div class="text-center">
+                                                <img src="../dist/img/GetImage.jpg" alt="" class="rounded img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <h2 class="lead">
+                                                <b>Venue name</b>
+                                            </h2>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="button" style="vertical-align:middle" id="showHide"><span>Check </span></button>
+                    </div>
+                    
+                    <div class="col-md-8 offset-md-2">
+                        <div id="foo" style="display:none">
+                            <div class="card-header">
+                                <h3 class="card-title">Available slot list</h3>
+                            </div>
+                            <div class="slotList">
+                            
+                                <div class="owl-carousel owl-theme" data-interval="false">
+                                    <div class="radios item">
+                                        <input type="radio" name="time" value="" id="r1">
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r1"><span>9.00 AM - 9.50 AM</span></label>
+                                    </div>
+
+                                    <div class="radios item"> 
+                                        <input type="radio" name="time" value="" id="r2" />
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r2"><span>10.00 AM - 10.30 AM</span></label>
+                                    </div>  
+
+                                    <div class="radios item"> 
+                                        <input type="radio" name="time" value="" id="r4">
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r4"><span>10.31 AM - 11.50 AM</span></label>
+                                    </div>
+
+                                    <div class="radios item"> 
+                                        <input type="radio" name="time" value="" id="r5">
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r5"><span>11.51 AM - 12.50 PM</span></label>
+                                    </div> 
+
+                                    <div class="radios item"> 
+                                        <input type="radio" name="time" value="" id="r6" />
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r6"><span>2.00 PM - 3.50 PM</span></label>
+                                    </div> 
+
+                                    <div class="radios item"> 
+                                        <input type="radio" name="time" value="" id="r7" />
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r7"><span>4.00 PM - 4.30 PM</span></label>
+                                    </div>
+
+                                    <div class="radios item"> 
+                                        <input type="radio" name="time" value="" id="r8" />
+                                        <label data-toggle="modal" data-target="#modal-appoinment-add" class="radio" for="r8"><span>4.40 PM - 5.30 PM</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add appoinment -->
+                    <div class="modal fade" id="modal-appoinment-add">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add appoinment</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body px-4">
+                                    <form class="form-horizontal px-4">
+                                        <div class="form-group row no-gutters">
+                                            <label for="inputName" class="col-sm-2 offset-sm-1 col-form-label">Meeting date</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputName" value=" 08/05/2021" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputStart" class="col-sm-2 offset-sm-1 col-form-label">Start time</label>
+                                            <div class="col-sm-8">
+                                                <input type="time" class="form-control" id="inputStart">
+                                            </div>
+                                        </div>                                     
+                                        <div class="form-group row">
+                                            <label for="inputEnd" class="col-sm-2 offset-sm-1 col-form-label">End time</label>
+                                            <div class="col-sm-8">
+                                                <input type="time" class="form-control" id="inputEnd">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputName" class="col-sm-2 offset-sm-1 col-form-label">Meeting with</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputName" placeholder="Person name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputName" class="col-sm-2 offset-sm-1 col-form-label">Meeting place</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputName" placeholder="Place name">
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group row">
+                                            <label for="inputReminder" class="col-sm-2 offset-sm-1 col-form-label">Reminder</label>
+                                            <div class="col-sm-8">
+                                                <input type="time" class="form-control" id="inputReminder">
+                                            </div>
+                                        </div>   
+                                        <div class="form-group row">
+                                            <label for="inputReminder" class="col-sm-2 offset-sm-1 col-form-label">Purpose</label>
+                                            <div class="col-sm-8">
+                                                <textarea name="" id="" class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>                    
+                                        <div class="form-group row">
+                                            <div class="offset-sm-3 col-sm-8">
+                                                <button type="submit" class="formPopBtn">Confirm</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- modal-content -->
+                        </div>
+                        <!-- modal-dialog -->
+                    </div>
+                    <!-- modal -->
+                </div>
+            </section>
+            <!-- content -->
+        </div>
+        <!-- content-wrapper -->
+        
+        <!-- Right sidebar -->
+        <div class="right-sidebar right-bar-block mt-5" style="right:0; top: 55px">
+            <a href="../pages/external.html" class="right-bar-item">
+                <img src="../dist/img/zoom.png" alt="" class="img-fluid shadow img-circle">    
+            </a>
+            <a href="../pages/external.html" class="right-bar-item">
+                <img src="../dist/img/gmail.png" alt="" class="img-fluid shadow img-circle">    
+            </a>
+            <a href="../pages/external.html" class="right-bar-item">
+                <img src="../dist/img/todo.png" alt="" class="img-fluid shadow img-circle">    
+            </a>
+            <a href="../pages/calendar.html" class="right-bar-item">
+                <img src="../dist/img/calendar.png" alt="" class="img-fluid shadow img-circle">    
+            </a>
+            <a href="../pages/external.html" class="right-bar-item">
+                <img src="../dist/img/chat.png" alt="" class="img-fluid shadow img-circle">    
+            </a>
+        </div>
+    
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2021 <a href="">wiztecbd</a>.</strong>
+            All rights reserved.
+        </footer>
+    </div>
+    <!-- wrapper -->
+
+
+    <!-- Bootstrap 4 -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../dist/js/demo.js"></script>
+  
+    <script>
+        $(function () {
+        $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+        });
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+        });
+    </script>
+    
+    <script>
+        document.getElementById("showHide").onclick = function() {
+            var theDiv = document.getElementById("foo");
+            if(theDiv.style.display == 'none') {
+                theDiv.style.display = 'block';
+                //this.innerHTML = 'Checked';
+            } else {
+                theDiv.style.display = 'none';
+                //this.innerHTML = 'Check';
+            }
+        }
+    </script>
+    
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker({
+                dateFormat: 'dd-mm-yy',
+                onSelect: function(e) {
+                    console.log("Selected date: " + e + "; input's current value: " + this.value);
+                    $("#my-input").val(e)
+                }
+            });
+        });
+    </script>
+    
+    <script src="OwlCarousel2-2.3.4/dist/owl.carousel.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('.owl-carousel').owlCarousel({
+            center: false,
+            loop:false,
+            margin:0,
+            nav:false,
+            dots:false,
+            interval: false,
+            responsive:{
+                0:{
+                    items:3
+                },
+                600:{
+                    items:4
+                },
+                1000:{
+                    items:6
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
